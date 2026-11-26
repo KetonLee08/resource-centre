@@ -2,28 +2,35 @@
 # Resource Centre System
 # ============================================================
 
+MENU_MIN = 0
+MENU_MAX = 5
+TYPE_CAMERA = 1
+TYPE_LAPTOP = 2
+AVAILABLE = "Yes"
+LOANED = "No"
+
 c = [
-    ["C001", "Nikon COOLPIX L32", "Yes", ""],
-    ["C002", "Canon PowerShot A4000 IS", "Yes", ""],
-    ["C003", "Olympus TG-6 Tough", "Yes", ""],
+    ["C001", "Nikon COOLPIX L32", AVAILABLE, ""],
+    ["C002", "Canon PowerShot A4000 IS", AVAILABLE, ""],
+    ["C003", "Olympus TG-6 Tough", AVAILABLE, ""],
 ]
 l = [
-    ["L001", "Lenovo Yoga Pro 7", "Yes", ""],
-    ["L002", "ASUS Vivobook", "Yes", ""],
-    ["L003", "HP Pavilion Plus 14", "Yes", ""],
+    ["L001", "Lenovo Yoga Pro 7", AVAILABLE, ""],
+    ["L002", "ASUS Vivobook", AVAILABLE, ""],
+    ["L003", "HP Pavilion Plus 14", AVAILABLE, ""],
 ]
 
 def count_available(items):
     count = 0
     for item in items:
-        if item[2] == "Yes":
+        if item[2] == AVAILABLE:
           count = count + 1
     return count
 
 def menu():
     x = -1
-    # valid choices are 0 to 4 (0 = Quit)
-    while not 0 <= x <= 5:
+    # valid choices are 0 to 5 (0 = Quit)
+    while not MENU_MIN <= x <= MENU_MAX:
         print("\n==============================================")
         print("RESOURCE CENTRE SYSTEM:")
         print("1. Add item")
@@ -33,14 +40,14 @@ def menu():
         print("5. Show how many items are available")
         print("0. Quit")
         x = int(input("Enter your choice >"))
-        if not 0 <= x <= 5:
+        if not MENU_MIN <= x <= MENU_MAX:
             print("Invalid choice, please enter again.\n")
     return x
 
 
 def go():
     x = menu()
-    while x != 0:
+    while x != MENU_MIN:
 
         if x == 1:
             print("")
@@ -51,15 +58,15 @@ def go():
             print("1. Digital Camera")
             print("2. Laptop")
             t = int(input("Enter option to select item type >"))
-            if t == 1:
+            if t == TYPE_CAMERA:
                 tag = input("Enter asset tag >")
                 desc = input("Enter description >")
-                c.append([tag, desc, "Yes", ""])
+                c.append([tag, desc, AVAILABLE, ""])
                 print("Digital camera added.")
-            elif t == 2:
+            elif t == TYPE_LAPTOP:
                 tag = input("Enter asset tag >")
                 desc = input("Enter description >")
-                l.append([tag, desc, "Yes", ""])
+                l.append([tag, desc, AVAILABLE, ""])
                 print("Laptop added.")
             else:
                 print("Invalid item type.")
@@ -70,10 +77,10 @@ def go():
             print("Display available items")
             print("==============================================")
             for i in c:
-                if i[2] == "Yes":
+                if i[2] == AVAILABLE:
                     print(i[0], i[1])
             for i in l:
-                if i[2] == "Yes":
+                if i[2] == AVAILABLE:
                     print(i[0], i[1])
 
         elif x == 3:
@@ -85,28 +92,28 @@ def go():
             print("1. Digital Camera")
             print("2. Laptop")
             t = int(input("Enter option to select item type >"))
-            if t == 1:
+            if t == TYPE_CAMERA:
                 for i in c:
-                    if i[2] == "Yes":
+                    if i[2] == AVAILABLE:
                         print(i[0], i[1])
                 tag = input("Enter asset tag >")
                 d = input("Enter due date >")
                 for i in c:
                     if i[0] == tag:
-                        if i[2] == "Yes":
-                            i[2] = "No"
+                        if i[2] == AVAILABLE:
+                            i[2] = LOANED
                             i[3] = d
                             print("Camera", tag, "loaned out.")
-            elif t == 2:
+            elif t == TYPE_LAPTOP:
                 for i in l:
-                    if i[2] == "Yes":
+                    if i[2] == AVAILABLE:
                         print(i[0], i[1])
                 tag = input("Enter asset tag >")
                 d = input("Enter due date >")
                 for i in l:
                     if i[0] == tag:
-                        if i[2] == "Yes":
-                            i[2] = "No"
+                        if i[2] == AVAILABLE:
+                            i[2] = LOANED
                             i[3] = d
                             print("Laptop", tag, "loaned out.")
             else:
@@ -121,18 +128,18 @@ def go():
             print("1. Digital Camera")
             print("2. Laptop")
             t = int(input("Enter option to select item type >"))
-            if t == 1:
+            if t == TYPE_CAMERA:
                 tag = input("Enter asset tag >")
                 for i in c:
                     if i[0] == tag:
-                        i[2] = "Yes"
+                        i[2] = AVAILABLE
                         i[3] = ""
                         print("Camera", tag, "returned.")
-            elif t == 2:
+            elif t == TYPE_LAPTOP:
                 tag = input("Enter asset tag >")
                 for i in l:
                     if i[0] == tag:
-                        i[2] = "Yes"
+                        i[2] = AVAILABLE
                         i[3] = ""
                         print("Laptop", tag, "returned.")
             else:
